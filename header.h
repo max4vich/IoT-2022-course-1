@@ -5,96 +5,128 @@ using namespace std;
 
 class Medicine
 {
-public:
+private:
     // price, quantity, name, isPrescriptionNeeded, expirationDate, etc
-    float price;
-    int quantity, expirationYear, expirationMonth;
-    string name, isPrescriptionNeeded;
-    bool whyyouboolieme;
-    Medicine(string name, float price, int quantity, int expirationMonth, int expirationYear, string isPrescriptionNeeded, bool whyyouboolieme)
+    int quantityOfMedicine, expirationYearOfMedicine, expirationMonthOfMedicine;
+    string nameOfMedicine, isPrescriptionNeededForMedicine;
+    bool boolOfExpiration;
+public:
+    float priceOfMedicine;
+
+    Medicine(string nameOfMedicine, float priceOfMedicine, int quantityOfMedicine, int expirationMonthOfMedicine, int expirationYearOfMedicine, string isPrescriptionNeededForMedicine, bool boolOfExpiration)
     {
-        this->name = name;
-        this->price = price;
-        this->quantity = quantity;
-        this->expirationMonth = expirationMonth;
-        this->expirationYear = expirationYear;
-        this->isPrescriptionNeeded = isPrescriptionNeeded;
-        this->whyyouboolieme = whyyouboolieme;
+        this->nameOfMedicine = nameOfMedicine;
+        this->priceOfMedicine = priceOfMedicine;
+        this->quantityOfMedicine = quantityOfMedicine;
+        this->expirationMonthOfMedicine = expirationMonthOfMedicine;
+        this->expirationYearOfMedicine = expirationYearOfMedicine;
+        this->isPrescriptionNeededForMedicine = isPrescriptionNeededForMedicine;
+        this->boolOfExpiration = boolOfExpiration;
     }
     ~Medicine(){};
+
+    string getName(){
+        return nameOfMedicine;
+    }
+
+    int getQuantity(){
+        return quantityOfMedicine;
+    }
+
+    int getExpirationMonth(){
+        return expirationMonthOfMedicine;
+    }
+
+    int getExpirationYear(){
+        return expirationYearOfMedicine;
+    }
+
+    string getIsPrescriptionNeeded(){
+        return isPrescriptionNeededForMedicine;
+    }
+
+    bool getBoolOfExpiration(){
+        return boolOfExpiration;
+    }
+
 };
 
 class Pharmacy
 {
+private:
+    vector<Medicine> medicines;
 public:
-    vector<Medicine> medicaments;
+    Pharmacy(){};
 
-    void add_medicament(Medicine medicament)
+    void AddMedicine(Medicine medicine)
     {
-        medicaments.push_back(medicament);
+        medicines.push_back(medicine);
     } // add
 
-    void remove_medicament()
+    void RemoveMedicine()
     {
-        string a;
-        cin >> a;
+        string nameOfCurrentMedicine;
+        cin >> nameOfCurrentMedicine;
             int i;
-            for (i=0; i<medicaments.size();i++){
-                if (medicaments[i].name == a) {
-                    medicaments.erase(medicaments.begin()+i);
+            for (i=0; i<medicines.size();i++){
+                if (medicines[i].getName() == nameOfCurrentMedicine) {
+                    medicines.erase(medicines.begin()+i);
+
                 }
-                }
+            }
     }
 // remove
 
-    void bubbleSort()
+    void BubbleSort() //!
     {
-        bool swapp = true;
-        while(swapp){
-            swapp = false;
-            for (size_t i = 0; i < medicaments.size()-1; i++) {
-                if (medicaments[i].price>medicaments[i+1].price ){
-                    medicaments[i].price += medicaments[i+1].price;
-                    medicaments[i+1].price = medicaments[i].price - medicaments[i+1].price;
-                    medicaments[i].price -=medicaments[i+1].price;
-                    swapp = true;
+        bool sortingFlag = true;
+        while(sortingFlag){
+            sortingFlag = false;
+            for (size_t i = 0; i < medicines.size()-1; i++) {
+                if (medicines[i].priceOfMedicine > medicines[i+1].priceOfMedicine ){
+                    medicines[i].priceOfMedicine += medicines[i+1].priceOfMedicine;
+                    medicines[i+1].priceOfMedicine = medicines[i].priceOfMedicine - medicines[i+1].priceOfMedicine;
+                    medicines[i].priceOfMedicine -= medicines[i+1].priceOfMedicine;
+                    sortingFlag = true;
                 }
             }
         }
-        cout << "Sorted price-list of medicaments:" << endl;
-        for (size_t i=0;  i <medicaments.size();  i++) {
+        cout << "Sorted price-list of medicines:" << endl;
+        for (size_t i=0;  i <medicines.size();  i++) {
 
-            cout << medicaments[i].name << endl;
-            cout << medicaments[i].price << " uah" << endl;
+            cout << medicines[i].getName() << endl;
+            cout << medicines[i].priceOfMedicine << " uah" << endl;
 
         }
         cout<<endl;
     }
 
-    void print_non_expired(){
-        for(auto medicament : medicaments){
-            if (medicament.whyyouboolieme == true){
-                cout << "Name is " << medicament.name <<  endl;
+    void OutPutOfNonExpiredMedicines(){
+        for(auto medicine : medicines){
+            if (medicine.getBoolOfExpiration() == true){
+                cout << "Name is " << medicine.getName() <<  endl;
                 cout << "It is non-expired medicament." << endl;
                 cout << endl;
             }
         }
     }
-    void print(){
-        for(auto medicament : medicaments){
-            cout << medicament.name << endl;
-            cout << medicament.price << " uah" << endl;
+    void OutPutOfAllMedicines(){
+        for(auto medicine : medicines){
+            cout << medicine.getName() << endl;
+            cout << medicine.priceOfMedicine << " uah" << endl;
         }
         cout << endl;
     }
 
-    void discount(){
-        for(auto medicament : medicaments){
-            medicament.price *= 0.9;
-            cout << "Name is " << medicament.name <<  endl;
-            cout << "Price is " << medicament.price << " uah" <<  endl;
+    void OutPutOfMedicinesWithDiscount(){
+        for(auto medicine : medicines){
+            medicine.priceOfMedicine *= 0.9;
+            cout << "Name is " << medicine.getName() <<  endl;
+            cout << "Price is " << medicine.priceOfMedicine << " uah" <<  endl;
             cout << endl;
             }
 
     }
+
+    ~Pharmacy(){};
 };
