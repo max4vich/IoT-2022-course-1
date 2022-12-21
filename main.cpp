@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include "3.h"
+#include "header.h"
 #include <ctime>
 using namespace std;
 
 
 int main() {
-    int i = 1;
+    int terminalNum = 1;
 
     Pharmacy medicaments;
     Medicine medicament1("Aspirin", 60.23, 50, 10, 2023, "Yes", true);
@@ -16,12 +16,12 @@ int main() {
     Medicine medicament4("Atoxil", 43.49, 32, 7, 2024, "No",true);
     Medicine medicament5("Loratydyn", 53.49, 96, 5, 2022, "No",false);
 
-    medicaments.add_medicament(medicament1);
-    medicaments.add_medicament(medicament2);
-    medicaments.add_medicament(medicament3);
-    medicaments.add_medicament(medicament4);
-    medicaments.add_medicament(medicament5);
-    while (i > 0) {
+    medicaments.AddMedicine(medicament1);
+    medicaments.AddMedicine(medicament2);
+    medicaments.AddMedicine(medicament3);
+    medicaments.AddMedicine(medicament4);
+    medicaments.AddMedicine(medicament5);
+    while (terminalNum > 0) {
         time_t now = time(0);
         tm *ltm = localtime(&now);
         cout << "Welcome to APTEK_PHARMACY system" << endl;
@@ -34,71 +34,73 @@ int main() {
         cout << "Write 6, if you need to see all medicines." << endl;
         cout << "Write 7, if you need to stop our system." << endl;
 
-        int a;
-        cin >> a;
-
-        string name1;
-        float price1;
-        int quantity1;
-        int expirationMonth1;
-        int expirationYear1;
-        string isPrescriptionNeeded1;
-        bool whybool = false;
+        int inputtedNum;
+        cin >> inputtedNum;
 
 
+        string nameOfMedicine;
+        float priceOfMedicine;
+        int quantityOfMedicine;
+        int expirationMonthOfMedicine;
+        int expirationYearOfMedicine;
+        string isPrescriptionNeededForMedicine;
+        bool boolOfExpiration = false;
 
-        if (a == 1) {
+
+
+        if (inputtedNum == 1) {
             cout << "Write medicament which you need to delete: " << endl;
-            medicaments.remove_medicament();
-            medicaments.print();
+            medicaments.RemoveMedicine();
+            medicaments.OutPutOfAllMedicines();
             cout << endl;
         }
-        else if (a == 2) {
-            string gool;
+        else if (inputtedNum == 2) {
+            string flagForExpiration;
+
             cout << "Write name: " << endl;
-            cin >> name1;
+            cin >> nameOfMedicine;
             cout << "Write price: " << endl;
-            cin >> price1;
+            cin >> priceOfMedicine;
             cout << "Write quantity: " << endl;
-            cin >> quantity1;
-            cout << "Write expirationMonth: " << endl;
-            cin >> expirationMonth1;
-            cout << "Write expirationYear: " << endl;
-            cin >> expirationYear1;
+            cin >> quantityOfMedicine;
+            cout << "Write expiration month: " << endl;
+            cin >> expirationMonthOfMedicine;
+            cout << "Write expiration year: " << endl;
+            cin >> expirationYearOfMedicine;
             cout << "Write isPrescriptionNeeded: " << endl;
-            cin >> isPrescriptionNeeded1;
+            cin >> isPrescriptionNeededForMedicine;
             cout << "Write is it expired or not (true - not, false - yes): " << endl;
-            cin >> gool;
-            if (gool == "true"){
-                whybool = true;
+            cin >> flagForExpiration;
+            if (flagForExpiration == "true"){
+                boolOfExpiration = true;
             }
             else
             {
-                whybool = false;
+                boolOfExpiration = false;
             }
-            Medicine medicament10(name1, price1, quantity1, expirationMonth1, expirationYear1, isPrescriptionNeeded1, whybool);
-            medicaments.add_medicament(medicament10);
-            medicaments.print();
+            Medicine medicament10(nameOfMedicine, priceOfMedicine, quantityOfMedicine, expirationMonthOfMedicine, expirationYearOfMedicine, isPrescriptionNeededForMedicine, boolOfExpiration);
+            medicaments.AddMedicine(medicament10);
+            medicaments.OutPutOfAllMedicines();
 
             cout << endl;
         }
 
-        else if (a == 3){
+        else if (inputtedNum == 3){
             cout << "There is our discount's list: " << endl;
-            medicaments.discount();
+            medicaments.OutPutOfMedicinesWithDiscount();
         }
-        else if (a == 4){
-            medicaments.bubbleSort();
+        else if (inputtedNum == 4){
+            medicaments.BubbleSort();
 
         }
-        else if (a == 5){
-            medicaments.print_non_expired();
+        else if (inputtedNum == 5){
+            medicaments.OutPutOfNonExpiredMedicines();
         }
-        else if (a == 6){
-            medicaments.print();
+        else if (inputtedNum == 6){
+            medicaments.OutPutOfAllMedicines();
         }
-        else if (a == 7){
-            i = 0;
+        else if (inputtedNum == 7){
+            terminalNum = 0;
         }
 
     }
